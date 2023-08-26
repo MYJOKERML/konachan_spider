@@ -22,6 +22,7 @@ proxies = {
 
 # 下载图片
 # tags = 'rating:safe+order:score'
+safe_mode = True # 是否开启安全模式
 tag = 'mikasa_ackerman'
 if safe_mode:
     tags = 'rating:safe+' + tag # 防止爬取到R18图片，要添加其他tag请修改变量tag
