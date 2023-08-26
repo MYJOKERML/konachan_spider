@@ -73,8 +73,13 @@ for page in range(1, pages_num + 1):
         else:
             if proxies_on:
                 url = 'https://konachan.com/post.json?page={}'.format(page)
+                if tag != '':
+                    url = 'https://konachan.com/post.json?tags={}&page={}'.format(tag, page)
             else:
                 url = 'https://konachan.net/post.json?page={}'.format(page)
+                if tag != '':
+                    url = 'https://konachan.net/post.json?tags={}&page={}'.format(tag, page)
+                
         try:
             post_req = requests.get(url, headers=headers, proxies=proxies)
             post = json.loads(post_req.content)
