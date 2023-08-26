@@ -24,7 +24,7 @@ proxies = {
 # tags = 'rating:safe+order:score'
 safe_mode = True # 是否开启安全模式
 # tags = 'rating:safe' # 防止爬取到R18图片，要添加其他tag请在后面加上+号，例如 'rating:safe+girl'
-tag = 'mikasa_ackerman'
+tag = ''
 if safe_mode:
     tags = 'rating:safe+' + tag
 pages_num = 10000 # 爬取的页数，请记得修改！！！否则默认爬取10000页
