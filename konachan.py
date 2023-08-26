@@ -23,17 +23,15 @@ proxies = {
 # 下载图片
 # tags = 'rating:safe+order:score'
 safe_mode = True # 是否开启安全模式
+# tags = 'rating:safe' # 防止爬取到R18图片，要添加其他tag请在后面加上+号，例如 'rating:safe+girl'
 tag = 'mikasa_ackerman'
 if safe_mode:
-    tags = 'rating:safe+' + tag # 防止爬取到R18图片，要添加其他tag请修改变量tag
-pages_num = 10000 # 爬取的页数, 请记得修改！！！否则默认会爬取10000页
+    tags = 'rating:safe+' + tag
+pages_num = 10000 # 爬取的页数，请记得修改！！！否则默认爬取10000页
 
 proxies_on = False # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
 if not proxies_on:
     proxies = None
-
-# 判断是否还有图片可以爬取，没有就跳出循环
-return_flag = False
 
 # 保存路径
 if safe_mode:
@@ -46,7 +44,7 @@ else:
         save_path = 'D:\\dataset\\konachan\\explicit\\'
     elif os.name == 'posix':
         save_path = '~/dataset/konachan/explicit/'
-        
+
 save_path = os.path.join(save_path, tag + '\\')
 
 if not os.path.exists(save_path):
@@ -80,7 +78,6 @@ for page in range(1, pages_num + 1):
                 url = 'https://konachan.net/post.json?page={}'.format(page)
                 if tag != '':
                     url = 'https://konachan.net/post.json?tags={}&page={}'.format(tag, page)
-                
         try:
             post_req = requests.get(url, headers=headers, proxies=proxies)
             post = json.loads(post_req.content)
@@ -89,6 +86,7 @@ for page in range(1, pages_num + 1):
                 print('已经没有更多图片了')
                 return_flag = True
                 break
+            print('正在爬取第{}页：{}'.format(page, url))
             for i in range(len(post)):
                 img_url = post[i]['file_url']
                 img_name = post[i]['id']
@@ -97,13 +95,12 @@ for page in range(1, pages_num + 1):
                     print('第{}页第{}张图片已存在'.format(page, i + 1))
                     continue
                 else:
-                    time.sleep(0.1) # 防止爬取过快被封IP
                     img_req = requests.get(img_url, headers=headers, proxies=proxies)
                     img = img_req.content
                     with open(save_path + str(img_name) + img_suffix, 'wb') as f:
                         f.write(img)
                         print('第{}页第{}张图片下载完成'.format(page, i + 1), f'图片id: {img_name}{img_suffix}')
-
+                    time.sleep(0.1) # 防止爬取过快被封IP
             print('第{}页爬取完成'.format(page))
             break
         except Exception as e:
