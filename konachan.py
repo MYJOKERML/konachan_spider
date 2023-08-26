@@ -44,8 +44,9 @@ else:
         save_path = 'D:\\dataset\\konachan\\explicit\\'
     elif os.name == 'posix':
         save_path = '~/dataset/konachan/explicit/'
-
-save_path = os.path.join(save_path, tag + '\\')
+        
+if tag != '':
+    save_path = os.path.join(save_path, tag + '\\')
 
 if not os.path.exists(save_path):
     os.makedirs(save_path)
