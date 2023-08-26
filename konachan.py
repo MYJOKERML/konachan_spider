@@ -22,13 +22,17 @@ proxies = {
 
 # 下载图片
 # tags = 'rating:safe+order:score'
-safe_mode = True # 是否开启安全模式
-tags = 'rating:safe' # 防止爬取到R18图片，要添加其他tag请在后面加上+号，例如 'rating:safe+girl'
-pages_num = 5 # 爬取的页数
+tag = 'mikasa_ackerman'
+if safe_mode:
+    tags = 'rating:safe+' + tag # 防止爬取到R18图片，要添加其他tag请修改变量tag
+pages_num = 10000 # 爬取的页数, 请记得修改！！！否则默认会爬取10000页
 
 proxies_on = False # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
 if not proxies_on:
     proxies = None
+
+# 判断是否还有图片可以爬取，没有就跳出循环
+return_flag = False
 
 # 保存路径
 if safe_mode:
@@ -41,6 +45,8 @@ else:
         save_path = 'D:\\dataset\\konachan\\explicit\\'
     elif os.name == 'posix':
         save_path = '~/dataset/konachan/explicit/'
+        
+save_path = os.path.join(save_path, tag + '\\')
 
 if not os.path.exists(save_path):
     os.makedirs(save_path)
@@ -52,7 +58,12 @@ print('代理：', proxies_on)
 print('保存路径：', save_path)
 print('开始爬取...')
 
+# 判断是否还有图片可以爬取，没有就跳出循环
+return_flag = False
+
 for page in range(1, pages_num + 1):
+    if return_flag:
+        break
     while True:
         if safe_mode:
             if proxies_on:
@@ -68,6 +79,10 @@ for page in range(1, pages_num + 1):
             post_req = requests.get(url, headers=headers, proxies=proxies)
             post = json.loads(post_req.content)
             # print(post)
+            if len(post) == 0:
+                print('已经没有更多图片了')
+                return_flag = True
+                break
             for i in range(len(post)):
                 img_url = post[i]['file_url']
                 img_name = post[i]['id']
