@@ -22,7 +22,7 @@ proxies = {
 
 # 下载图片
 # tags = 'rating:safe+order:score'
-safe_mode = False # 是否开启安全模式
+safe_mode = True # 是否开启安全模式
 tags = 'rating:safe' # 防止爬取到R18图片，要添加其他tag请在后面加上+号，例如 'rating:safe+girl'
 pages_num = 5 # 爬取的页数
 
