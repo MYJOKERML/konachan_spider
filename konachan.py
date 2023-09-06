@@ -15,41 +15,43 @@ headers = {"User-Agent": user_agent}
 
 # 代理, 视自己使用的软件情况而定
 proxies = {
-    'http': 'http://127.0.0.1:33210',
-    'https': 'http://127.0.0.1:33210',
-    'all': 'socks5://127.0.0.1:33211'
+    'http': 'http://127.0.0.1:7890',
+    'https': 'http://127.0.0.1:7890',
+    'all': 'socks5://127.0.0.1:7890'
 }
 
 # 下载图片
 # tags = 'rating:safe+order:score'
-safe_mode = True # 是否开启安全模式
+safe_mode = False # 是否开启安全模式
 # tags = 'rating:safe' # 防止爬取到R18图片，要添加其他tag请在后面加上+号，例如 'rating:safe+girl'
 tag = ''
 if safe_mode:
     tags = 'rating:safe+' + tag
-pages_num = 10000 # 爬取的页数，请记得修改！！！否则默认爬取10000页
+pages_num = 2 # 爬取的页数，请记得修改！！！否则默认爬取10000页
 
-proxies_on = False # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
+proxies_on = True # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
 if not proxies_on:
     proxies = None
+
+date = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
 # 保存路径
 if safe_mode:
     if os.name == 'nt':
-        save_path = 'D:\\dataset\\konachan\\'
+        save_path = f'D:\\dataset\\konachan\\{date}\\'
     elif os.name == 'posix':
-        save_path = '~/dataset/konachan/'
+        save_path = f'./dataset/konachan/{date}/'
 else:
     if os.name == 'nt':
-        save_path = 'D:\\dataset\\konachan\\explicit\\'
+        save_path = f'D:\\dataset\\konachan\\explicit\\{date}\\'
     elif os.name == 'posix':
-        save_path = '~/dataset/konachan/explicit/'
+        save_path = f'./dataset/konachan/explicit/{date}/'
         
 if tag != '':
     save_path = os.path.join(save_path, tag + '\\')
 
 if not os.path.exists(save_path):
-    os.makedirs(save_path)
+    os.mkdir(save_path)
 
 # 没梯子只能上.net
 # print(proxies)
