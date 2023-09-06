@@ -22,12 +22,12 @@ proxies = {
 
 # 下载图片
 # tags = 'rating:safe+order:score'
-safe_mode = False # 是否开启安全模式
+safe_mode = True # 是否开启安全模式
 # tags = 'rating:safe' # 防止爬取到R18图片，要添加其他tag请在后面加上+号，例如 'rating:safe+girl'
 tag = ''
 if safe_mode:
     tags = 'rating:safe+' + tag
-pages_num = 2 # 爬取的页数，请记得修改！！！否则默认爬取10000页
+pages_num = 2 # 爬取的页数，请记得修改！！！
 
 proxies_on = True # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
 if not proxies_on:
@@ -51,7 +51,7 @@ if tag != '':
     save_path = os.path.join(save_path, tag + '\\')
 
 if not os.path.exists(save_path):
-    os.mkdir(save_path)
+    os.makedirs(save_path)
 
 # 没梯子只能上.net
 # print(proxies)
