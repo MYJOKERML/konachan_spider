@@ -27,7 +27,7 @@ safe_mode = True # 是否开启安全模式
 tag = ''
 if safe_mode:
     tags = 'rating:safe+' + tag
-pages_num = 2 # 爬取的页数，请记得修改！！！
+pages_num = 10 # 爬取的页数，默认10页，每页21张图片
 
 proxies_on = False # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
 if not proxies_on:

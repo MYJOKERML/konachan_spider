@@ -29,11 +29,29 @@ pip install -r requirements.txt
 
 **异步爬取，速度块**：
 
-如果不在乎流量的话，强烈建议使用异步爬虫进行爬取，爬取速度是顺序执行的10几倍。
+如果不在乎流量的话，强烈建议使用异步爬虫进行爬取，爬取速度是顺序执行的10倍。
 
 ```bash
 python spider_async.py
 ```
+
+**请注意，因为我并没有解决请求过于频繁的问题，因此建议使用异步爬取时页数不超过10页，如果你想要坚持爬取的话请注释掉 `fetch_page(session, page)` 中的try_times相关代码**
+
+```python
+# try_times = 0
+while True:
+    try:
+        async with session.get(url, headers=headers, proxy=proxies.get('http', None) if proxies_on else None) as response:
+            return await response.json()
+        except Exception as e:
+            print(f'Error fetching page {page}: {str(e)}')
+            await asyncio.sleep(0.5)
+            # try_times += 1
+            # if try_times >= 100:
+            #    return []
+```
+
+
 
 **依次爬取，效率较低**
 

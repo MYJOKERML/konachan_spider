@@ -6,7 +6,7 @@ import time
 from fake_useragent import UserAgent
 
 ua = UserAgent()
-user_agent = ua.random
+user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
 
 headers = {"User-Agent": user_agent}
 
@@ -22,8 +22,8 @@ proxies = {
 safe_mode = True # 是否开启安全模式
 # tags = 'rating:safe' # 防止爬取到R18图片，要添加其他tag请在后面加上+号，例如 'rating:safe+girl'
 tag = ''
-tags = f"'rating:safe+' + {tag}" if safe_mode else f"{tag}"
-pages_num = 2 # 爬取的页数，请记得修改！！!
+tags = f"rating:safe+{tag}" if safe_mode else f"{tag}"
+pages_num = 10 # 爬取的页数，默认10页，每页21张图片
 
 proxies_on = False # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
 if not proxies_on:
@@ -72,17 +72,17 @@ async def fetch_page(session, page):
             url = 'https://konachan.net/post.json?page={}'.format(page)
             if tag != '':
                 url = 'https://konachan.net/post.json?tags={}&page={}'.format(tag, page)
-    try_times = 0
+    # try_times = 0
     while True:
         try:
             async with session.get(url, headers=headers, proxy=proxies.get('http', None) if proxies_on else None) as response:
                 return await response.json()
         except Exception as e:
             print(f'Error fetching page {page}: {str(e)}')
-            asyncio.sleep(0.5)
-            try_times += 1
-            if try_times >= 100:
-                return []
+            await asyncio.sleep(0.5)
+            # try_times += 1
+            # if try_times >= 100:
+            #     return []
 
 async def download_image(session, img_url, img_name, img_suffix):
     while True:
@@ -98,9 +98,10 @@ async def download_image(session, img_url, img_name, img_suffix):
                         break
                 else:
                     print(f'Error downloading image {img_url}')
+                    await asyncio.sleep(0.5)
         except Exception as e:
-            print(f'Error downloading image {img_url}: {str(e)}')
-            asyncio.sleep(0.5)
+            print(f'Error downloading image {img_name}: {str(e)}')
+            await asyncio.sleep(0.5)
 
 async def crawl_page(session, page):
     post = await fetch_page(session, page)
