@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 1. `safe_mode`: 默认开启，konachan有一些好看的东西，懂的都懂，就不说了，越说感觉自己越像个死肥宅。。。
 2. `proxies_on`: 是否开启代理，默认不开代理，这样会很慢，也有可能失败，失败后会自动尝试重连，如果一直连接失败的话请尝试开启代理。**开启代理请修改 `proxiex` 为自己代理端口**，否则会出现连接不上的情况。
-3. `save_path`：图片储存路径。Windows默认 `"D:\\dataset\\konachan\\"+tag`，Linux默认`~/dataset/konachan/` 
+3. `save_path`：图片储存路径。Windows默认 `f"D:\\dataset\\konachan\\{date}\\"+tag`，Linux默认`f'./dataset/konachan/{date}/'+tag` 
 4. `tag`：你想要爬取图片的标签，可以上[网页版](https://konachan.net/post)看看自己的标签到底搜不搜得到图片再爬取，要准确知道标签信息，否则经常会搜不出图片
 5. `pages_num`: !!!注意这是一定要改的，否则默认爬取10000页，基本上会把所有图片爬完了，虽说图片爬完了会自动停止的，但一张图片就打3M，一页21张图片，10000页也有6个多T，忘改了硬盘铁红（）
 
@@ -32,3 +32,10 @@ python konachan.py
 ```
 
 接着等数据（老婆）下载就行啦
+
+## Upate 2023-9-9
+
+更新了异步爬取图片的程序 "spider_async.py"，调整参数的方法同上。
+
+默认代理关闭，端口改为了7890，为clash的默认端口
+
