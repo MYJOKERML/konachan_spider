@@ -27,9 +27,9 @@ safe_mode = False # 是否开启安全模式
 tag = ''
 if safe_mode:
     tags = 'rating:safe+' + tag
-pages_num = 2 # 爬取的页数，请记得修改！！！否则默认爬取10000页
+pages_num = 2 # 爬取的页数，请记得修改！！！
 
-proxies_on = True # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
+proxies_on = False # 是否开启代理 (如果开启代理，需要在上面设置好代理的端口)
 if not proxies_on:
     proxies = None
 
@@ -51,7 +51,7 @@ if tag != '':
     save_path = os.path.join(save_path, tag + '\\')
 
 if not os.path.exists(save_path):
-    os.mkdir(save_path)
+    os.makedirs(save_path)
 
 # 没梯子只能上.net
 # print(proxies)
