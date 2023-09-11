@@ -75,7 +75,7 @@ async def fetch_page(session, page):
     # try_times = 0
     while True:
         try:
-            async with session.get(url, headers=headers, proxy=proxies.get('http', None) if proxies_on else None) as response:
+            async with await session.get(url, headers=headers, proxy=proxies.get('http', None) if proxies_on else None) as response:
                 return await response.json()
         except Exception as e:
             print(f'Error fetching page {page}: {str(e)}')
@@ -87,7 +87,7 @@ async def fetch_page(session, page):
 async def download_image(session, img_url, img_name, img_suffix):
     while True:
         try:
-            async with session.get(img_url, headers=headers, proxy=proxies.get('http', None) if proxies_on else None) as response:
+            async with await session.get(img_url, headers=headers, proxy=proxies.get('http', None) if proxies_on else None) as response:
                 if response.status == 200:
                     img_data = await response.read()
                     img_path = os.path.join(save_path, f'{img_name}{img_suffix}')
