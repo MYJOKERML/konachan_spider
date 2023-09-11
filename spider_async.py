@@ -79,7 +79,7 @@ async def fetch_page(session, page):
                 return await response.json()
         except Exception as e:
             print(f'Error fetching page {page}: {str(e)}')
-            await asyncio.sleep(0.5)
+            # time.sleep(0.1)
             # try_times += 1
             # if try_times >= 100:
             #     return []
@@ -98,10 +98,10 @@ async def download_image(session, img_url, img_name, img_suffix):
                         break
                 else:
                     print(f'Error downloading image {img_url}')
-                    await asyncio.sleep(0.5)
+                    # time.sleep(0.1)
         except Exception as e:
             print(f'Error downloading image {img_name}: {str(e)}')
-            await asyncio.sleep(0.5)
+            # time.sleep(0.1)
 
 async def crawl_page(session, page):
     post = await fetch_page(session, page)
