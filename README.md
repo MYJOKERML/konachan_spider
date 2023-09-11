@@ -15,7 +15,7 @@ cd konachan_spider
 pip install -r requirements.txt
 ```
 
-到此已经安装完所有依赖，其实就俩：`request` 用来发送请求，`fake_useragent` 用来随机生成一个user-agent。
+到此已经安装完所有依赖，一共三个：`requests` 用来发送请求，`fake_useragent` 用来随机生成一个user-agent，`aiohttp` 用来实现异步的http请求。
 
 接着你可以调整些代码的一些变量和细节以便更好地爬到你喜欢的图片。
 
