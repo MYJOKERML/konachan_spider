@@ -79,7 +79,7 @@ async def fetch_page(session, page):
                 return await response.json()
         except Exception as e:
             print(f'Error fetching page {page}: {str(e)}')
-            # time.sleep(0.1)
+            time.sleep(0.1)
             # try_times += 1
             # if try_times >= 100:
             #     return []
